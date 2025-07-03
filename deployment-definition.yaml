@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-replicaset
+  labels:
+    app: myapp
+    type: backend
+spec:
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        env: dev
+        type: backend
+        location: india
+
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx-image
+
+        - name: myapp-container
+          image: myapp-image
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+      type: backend
+
+      
