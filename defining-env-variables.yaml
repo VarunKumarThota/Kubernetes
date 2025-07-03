@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod
+  labels:
+    role: app-pod
+spec:
+  containers:
+    - name: app
+      image: app
+      imagePullPolicy: IfNotPresent
+      ports:
+        - name: app-pod
+          containerPort: 80
+          protocol: TCP
+      env:
+        - name: color
+          value: blue
+      #using configmap and secrets
+        - name: envconfig
+          valueFrom:
+            #using configmap
+            configMapKeyRef:
+              name: app-config
+              key: something
+            #using secrets
+            secretKeyRef:
+              key: somethingsecret
+  restartPolicy: Always
+  
